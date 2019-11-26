@@ -8,6 +8,7 @@ import ru.itpark.web.repository.AutoRepository;
 
 import javax.servlet.http.Part;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class AutoServiceImpl implements AutoService {
@@ -35,7 +36,13 @@ public class AutoServiceImpl implements AutoService {
 
     @Override
     public void removeById(int id) {
-        // TODO: забиваем на удаление картинок
-        repository.removeById(id);
+        Optional<AutoModel> optional = repository.getById(id);
+        if (optional.isPresent()) {
+            final String imageUrl = optional.get().getImageUrl();
+            if (imageUrl != null) {
+                fileService.eraseFile(imageUrl);
+            }
+            repository.removeById(id);
+        }
     }
 }

@@ -7,4 +7,6 @@ public interface FileService {
     void readFile(String id, OutputStream os);
 
     String writeFile(Part part);
+
+    void eraseFile(String imageUrl);
 }

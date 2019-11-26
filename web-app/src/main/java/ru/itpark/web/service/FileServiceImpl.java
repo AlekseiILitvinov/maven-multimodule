@@ -7,6 +7,7 @@ import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
@@ -39,6 +40,16 @@ public class FileServiceImpl implements FileService {
             part.write(Paths.get(uploadPath).resolve(id).toString());
             return id;
         } catch (IOException e) {
+            throw new FileAccessException(e);
+        }
+    }
+
+    public void eraseFile(String id){
+        final Path file = Paths.get(uploadPath).resolve(id);
+        try {
+            Files.delete(file);
+        } catch (IOException e) {
+            e.printStackTrace();
             throw new FileAccessException(e);
         }
     }

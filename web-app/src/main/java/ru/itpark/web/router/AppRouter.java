@@ -47,6 +47,7 @@ public class AppRouter implements Router {
         try {
             val rootUrl = request.getContextPath().isEmpty() ? "/" : request.getContextPath();
             val url = request.getRequestURI().substring(request.getContextPath().length());
+            request.setCharacterEncoding("UTF-8");
 
             if (url.equals("/")) {
                 if (request.getMethod().equals("GET")) {
@@ -57,13 +58,13 @@ public class AppRouter implements Router {
                 }
 
                 if (request.getMethod().equals("POST")) {
+
                     val name = request.getParameter("name");
                     val part = request.getPart("image");
                     autoService.save(new AutoModel(0, name, null), part);
                     response.sendRedirect(rootUrl);
                     return;
                 }
-
                 throw new NotFoundException();
             }
 
