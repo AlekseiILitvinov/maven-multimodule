@@ -1,0 +1,3 @@
+java -cp "web-app\target\dependency" webapp.runner.launch.Main --port 9999 "web-app\target\*.war" --enable-naming
+
+java -cp "web-app/target/dependency/*" webapp.runner.launch.Main --port 9999 "web-app/target/*.war" --enable-naming
